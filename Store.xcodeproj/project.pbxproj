@@ -13,6 +13,7 @@
 		2B1BEF032BF51FA000868CC2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B1BEF022BF51FA000868CC2 /* Preview Assets.xcassets */; };
 		2B4DF6FB2BF5D72E00AECE12 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4DF6FA2BF5D72E00AECE12 /* CardView.swift */; };
 		2B4DF6FD2BF5E1C000AECE12 /* CardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4DF6FC2BF5E1C000AECE12 /* CardList.swift */; };
+		2BCBA1232BF61EB500001E85 /* ProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BCBA1222BF61EB500001E85 /* ProductCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		2B1BEF022BF51FA000868CC2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2B4DF6FA2BF5D72E00AECE12 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		2B4DF6FC2BF5E1C000AECE12 /* CardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardList.swift; sourceTree = "<group>"; };
+		2BCBA1222BF61EB500001E85 /* ProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				2B1BEF012BF51FA000868CC2 /* Preview Content */,
 				2B4DF6FA2BF5D72E00AECE12 /* CardView.swift */,
 				2B4DF6FC2BF5E1C000AECE12 /* CardList.swift */,
+				2BCBA1222BF61EB500001E85 /* ProductCard.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 				2B1BEEFE2BF51F9E00868CC2 /* ContentView.swift in Sources */,
 				2B4DF6FB2BF5D72E00AECE12 /* CardView.swift in Sources */,
 				2B1BEEFC2BF51F9E00868CC2 /* StoreApp.swift in Sources */,
+				2BCBA1232BF61EB500001E85 /* ProductCard.swift in Sources */,
 				2B4DF6FD2BF5E1C000AECE12 /* CardList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

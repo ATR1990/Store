@@ -8,62 +8,104 @@
 import SwiftUI
 
 struct CardView: View {
-    var columns = [GridItem(.adaptive(minimum: 160), spacing: 15)]
-    
-    var image: String
-    var title: String
-    var price: String
+    @State private var quantity: Int = 0
+    @State private var isFavorite: Bool = false
+        
+    let productImage: String
+    let productName: String
+    let minQuantity: Int = 1
+    let unitPrice: Int
     
     var body: some View {
-        VStack(spacing: 8) {
-            VStack {
-                Image(image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 70, height: 70)
-                    .padding(.horizontal, 0)
-            }
-            Text(title)
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                .foregroundColor(.black)
-                .lineLimit(2)
-                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
-            Text("Organic")
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                .foregroundColor(.gray)
-                .lineLimit(2)
-                .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .center)
-            HStack {
-                Text(price)
-                    .font(.system(size: 20))
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                    .foregroundColor(.black)
-                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .leading)
+        VStack {
+            // Фото продукта
+            Image(productImage)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 200)
+                .clipped()
+            
+            // Название продукта и кнопка лайк
+            ZStack {
+                Text(productName)
+                    .font(.headline)
+                    .padding(.top, 5)
                 
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.system(size: 12, weight: .bold))
-                        .padding()
-                        .background(Color("Purple"))
-                        .cornerRadius(10)
-                        .foregroundColor(.white)
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        isFavorite.toggle()
+                    }) {
+                        Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            .foregroundColor(isFavorite ? .red : .gray)
+                            .font(.title2)
+                    }
                 }
+                .padding(.horizontal)
+            }
+            
+            // Цена за единицу добавляемого товара
+            Text("Цена за 1 кг: \(unitPrice) ₸")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            
+            ZStack {
+                HStack {
+                    Spacer()
+                    
+                    // Кнопка добавления в корзину / управления количеством
+                    if quantity == 0 {
+                        Button(action: {
+                            quantity = minQuantity
+                        }) {
+                            Text("Добавить в корзину - \(unitPrice * minQuantity) ₸")
+                                .font(.subheadline)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                    } else {
+                        HStack {
+                            Button(action: {
+                                if quantity > minQuantity {
+                                    quantity -= 1
+                                }
+                            }) {
+                                Image(systemName: "minus.circle")
+                                    .foregroundColor(.red)
+                                    .font(.title)
+                            }
+                            
+                            Text("\(quantity)")
+                                .font(.title)
+                                .padding(.horizontal, 10)
+                            
+                            Button(action: {
+                                quantity += 1
+                            }) {
+                                Image(systemName: "plus.circle")
+                                    .foregroundColor(.green)
+                                    .font(.title)
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    }
+                    
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .padding(.bottom, 10)
             }
         }
-        .padding(16)
-        .frame(height: 217, alignment: .top)
         .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous)     .stroke(Color.white.opacity(0.2), lineWidth: 0.5)
-            .blendMode(.overlay))
+        .cornerRadius(10)
+        .shadow(radius: 5)
+        .padding()
     }
 }
 
 #Preview {
-    CardView(image: "", title: "", price: "")
-        .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+    CardView(productImage: "", productName: "", unitPrice: 0)
+        .preferredColorScheme(.dark)
 }
