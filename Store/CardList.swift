@@ -11,7 +11,7 @@ struct CardList: View {
     var columns = [GridItem(.adaptive(minimum: 160), spacing: 15)]
     var images = ["banana", "apple", "peach", "watermelon", "strawberry", "orange"]
     var titles = ["Банан", "Яблоко", "Персик", "Арбуз", "Клубника", "Апельсин"]
-    var prices = ["1000 ₸", "750 ₸", "1500", "150 ₸", "2000 ₸", "1700 ₸"]
+    var prices = ["1000 ₸", "750 ₸", "1500 ₸", "150 ₸", "2000 ₸", "1700 ₸"]
     
     var body: some View {
         LazyVGrid(columns: columns, spacing: 15) {
