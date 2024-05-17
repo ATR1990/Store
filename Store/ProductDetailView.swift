@@ -42,10 +42,3 @@ struct ProductDetailView: View {
         .padding()
     }
 }
-
-#Preview {
-    ProductDetailView(product: Product(image: "banana", name: "Банан", price: 1000, description: "Свежий банан, выращенный на плантациях Эквадора.", nutritionalInfo: "Калории: 89, Белки: 1.1г, Жиры: 0.3г, Углеводы: 22.8г"))
-}
-
-
-
