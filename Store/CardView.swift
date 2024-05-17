@@ -15,6 +15,7 @@ struct CardView: View {
     let productName: String
     let minQuantity: Int = 1
     let unitPrice: Int
+    let onDetailsTap: () -> Void
     
     var body: some View {
         VStack {
@@ -24,6 +25,9 @@ struct CardView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 200)
                 .clipped()
+                .onTapGesture {
+                    onDetailsTap()
+                }
             
             // Название продукта и кнопка лайк
             ZStack {
@@ -106,6 +110,7 @@ struct CardView: View {
 }
 
 #Preview {
-    CardView(productImage: "", productName: "", unitPrice: 0)
+    CardView(productImage: "", productName: "", unitPrice: 0, onDetailsTap: {})
         .preferredColorScheme(.dark)
 }
+
