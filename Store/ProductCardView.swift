@@ -15,92 +15,90 @@ struct ProductCardView: View {
     let minQuantity: Int = 1
     
     var body: some View {
-        VStack {
-            // Фото продукта
-            Image(product.image)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(height: 75)
-                .clipped()
+        ZStack(alignment: .topTrailing) {
+            VStack {
+                // Фото продукта
+                Image(product.image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 75)
+                    .clipped()
 
-            // Название продукта и кнопка лайк
-            ZStack {
+                // Название продукта
                 Text(product.name)
                     .font(.headline)
                     .padding(.top, 5)
 
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        isFavorite.toggle()
-                    }) {
-                        Image(systemName: isFavorite ? "heart.fill" : "heart")
-                            .foregroundColor(isFavorite ? .red : .gray)
-                            .font(.title2)
-                    }
-                }
-                .padding(.horizontal)
-            }
+                // Цена за единицу добавляемого товара
+                Text("Цена за 1 кг")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
 
-            // Цена за единицу добавляемого товара
-            Text("Цена за 1 кг: \(product.price) ₸")
-                .font(.subheadline)
-                .foregroundColor(.gray)
+                ZStack {
+                    HStack {
+                        Spacer()
 
-            ZStack {
-                HStack {
-                    Spacer()
-
-                    // Кнопка добавления в корзину / управления количеством
-                    if quantity == 0 {
-                        Button(action: {
-                            quantity = minQuantity
-                        }) {
-                            HStack {
-                                Image(systemName: "cart")
-                                Text("\(product.price * minQuantity) ₸")
-                                    .font(.subheadline)
-                            }
-                            .padding(8)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                        }
-                    } else {
-                        HStack {
+                        // Кнопка добавления в корзину / управления количеством
+                        if quantity == 0 {
                             Button(action: {
-                                if quantity > minQuantity {
-                                    quantity -= 1
+                                quantity = minQuantity
+                            }) {
+                                HStack {
+                                    Image(systemName: "cart")
+                                    Text("\(product.price * minQuantity) ₸")
+                                        .font(.subheadline)
                                 }
-                            }) {
-                                Image(systemName: "minus.circle")
-                                    .foregroundColor(.red)
-                                    .font(.title)
+                                .padding(8)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
                             }
+                        } else {
+                            HStack {
+                                Button(action: {
+                                    if quantity > minQuantity {
+                                        quantity -= 1
+                                    }
+                                }) {
+                                    Image(systemName: "minus.circle")
+                                        .foregroundColor(.red)
+                                        .font(.title)
+                                }
 
-                            Text("\(quantity)")
-                                .font(.title)
-                                .padding(.horizontal, 10)
-
-                            Button(action: {
-                                quantity += 1
-                            }) {
-                                Image(systemName: "plus.circle")
-                                    .foregroundColor(.green)
+                                Text("\(quantity)")
                                     .font(.title)
+                                    .padding(.horizontal, 10)
+
+                                Button(action: {
+                                    quantity += 1
+                                }) {
+                                    Image(systemName: "plus.circle")
+                                        .foregroundColor(.green)
+                                        .font(.title)
+                                }
                             }
+                            .padding(.vertical, 5)
                         }
-                        .padding(.vertical, 5)
                     }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: 175)
+            .padding()
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(radius: 5)
+
+            // Кнопка лайк в верхнем правом углу карточки
+            Button(action: {
+                isFavorite.toggle()
+            }) {
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
+                    .foregroundColor(isFavorite ? .red : .gray)
+                    .font(.title2)
+            }
+            .padding()
         }
-        .frame(maxWidth: .infinity, maxHeight: 175)
-        .padding()
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 5)
     }
 }
 

@@ -44,7 +44,7 @@ struct CartView: View {
                         isCheckingOut = true
                     }
                 }) {
-                    Text("Проверить")
+                    Text("Оформить заказ")
                         .padding()
                         .background(Color.blue)
                         .foregroundColor(.white)
