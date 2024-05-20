@@ -79,6 +79,8 @@ struct ProductCardView: View {
                                 }
                             }
                             .padding(.vertical, 5)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            
                         }
                     }
                 }
@@ -118,6 +120,5 @@ struct HorizontalProductCardView: View {
         .padding()
         .background(Color.white)
         .cornerRadius(10)
-        .shadow(radius: 5)
     }
 }

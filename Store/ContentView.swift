@@ -11,29 +11,51 @@ struct ContentView: View {
     @State private var products: [Product] = []
     @State private var cart: [Product] = []
     @State private var selectedProduct: Product?
-    
+
     var body: some View {
         TabView {
             NavigationView {
                 ScrollView {
-                    LazyVGrid(
-                        columns: [
-                            GridItem(.flexible(), spacing: 20),
-                            GridItem(.flexible(), spacing: 20)
-                        ],
-                        spacing: 20
-                    ) {
-                        ForEach(products) { product in
-                            ProductCardView(product: product)
-                                .onTapGesture {
-                                    selectedProduct = product
+                    VStack {
+                        // Горизонтальный скролл
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 20) {
+                                ForEach(products) { product in
+                                    ProductCardView(product: product)
+                                        .frame(width: UIScreen.main.bounds.width - 40) // Товар на всю ширину
+                                        .onTapGesture {
+                                            selectedProduct = product
+                                        }
+                                        .sheet(item: $selectedProduct) { product in
+                                            ProductDetailView(product: product)
+                                        }
                                 }
-                                .sheet(item: $selectedProduct) { product in
-                                    ProductDetailView(product: product/*, cart: $cart*/)
-                                }
+                            }
+                            .padding([.horizontal, .top], 20) // Отступы сверху и по горизонтали
+                            .padding(.bottom, 10) // Отступ снизу
                         }
+                        .frame(height: 300) // Высота горизонтального скролла
+                        
+                        // Остальное содержимое
+                        LazyVGrid(
+                            columns: [
+                                GridItem(.flexible(), spacing: 20),
+                                GridItem(.flexible(), spacing: 20)
+                            ],
+                            spacing: 20
+                        ) {
+                            ForEach(products) { product in
+                                ProductCardView(product: product)
+                                    .onTapGesture {
+                                        selectedProduct = product
+                                    }
+                                    .sheet(item: $selectedProduct) { product in
+                                        ProductDetailView(product: product)
+                                    }
+                            }
+                        }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
                 .navigationBarTitle("Продукты")
                 .onAppear {
@@ -55,7 +77,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func fetchProducts() {
         guard let url = URL(string: "https://mocki.io/v1/77ff6a97-f7b2-4370-af3c-a3dba5cf9bae") else {
             print("Invalid URL")
@@ -79,4 +101,3 @@ struct ContentView: View {
         }.resume()
     }
 }
-
