@@ -15,24 +15,26 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationView {
-                LazyVGrid(
-                    columns: [
-                        GridItem(.flexible(), spacing: 20),
-                        GridItem(.flexible(), spacing: 20)
-                    ],
-                    spacing: 20
-                ) {
-                    ForEach(products) { product in
-                        ProductCardView(product: product)
-                            .onTapGesture {
-                                selectedProduct = product
-                            }
-                            .sheet(item: $selectedProduct) { product in
-                                ProductDetailView(product: product/*, cart: $cart*/)
-                            }
+                ScrollView {
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.flexible(), spacing: 20),
+                            GridItem(.flexible(), spacing: 20)
+                        ],
+                        spacing: 20
+                    ) {
+                        ForEach(products) { product in
+                            ProductCardView(product: product)
+                                .onTapGesture {
+                                    selectedProduct = product
+                                }
+                                .sheet(item: $selectedProduct) { product in
+                                    ProductDetailView(product: product/*, cart: $cart*/)
+                                }
+                        }
                     }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
                 .navigationBarTitle("Продукты")
                 .onAppear {
                     fetchProducts()
@@ -42,9 +44,10 @@ struct ContentView: View {
                 Image(systemName: "house")
                 Text("Главная")
             }
-            
+
             NavigationView {
-                CartView(cart: $cart).navigationBarTitle("Корзина")
+                CartView(cart: $cart)
+                    .navigationBarTitle("Корзина")
             }
             .tabItem {
                 Image(systemName: "cart")
