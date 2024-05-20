@@ -17,6 +17,7 @@ struct ProductCardView: View {
             Text("\(product.price) ₸")
                 .font(.subheadline)
         }
+        .frame(maxWidth: .infinity)
         .padding()
         .background(Color.white)
         .cornerRadius(10)

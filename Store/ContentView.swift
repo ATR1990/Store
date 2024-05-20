@@ -15,15 +15,24 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NavigationView {
-                List(products) { product in
-                    ProductCardView(product: product)
-                        .onTapGesture {
-                            selectedProduct = product
-                        }
-                        .sheet(item: $selectedProduct) { product in
-                            ProductDetailView(product: product/*, cart: $cart*/)
-                        }
+                LazyVGrid(
+                    columns: [
+                        GridItem(.flexible(), spacing: 20),
+                        GridItem(.flexible(), spacing: 20)
+                    ],
+                    spacing: 20
+                ) {
+                    ForEach(products) { product in
+                        ProductCardView(product: product)
+                            .onTapGesture {
+                                selectedProduct = product
+                            }
+                            .sheet(item: $selectedProduct) { product in
+                                ProductDetailView(product: product/*, cart: $cart*/)
+                            }
+                    }
                 }
+                .padding(.horizontal)
                 .navigationBarTitle("Продукты")
                 .onAppear {
                     fetchProducts()
