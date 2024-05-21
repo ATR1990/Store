@@ -28,13 +28,13 @@ struct ProductDetailView: View {
             Text("Описание")
                 .font(.headline)
             
-            Text(product.description)
+            Text(product.description ?? "")
                 .font(.body)
             
             Text("Пищевая ценность")
                 .font(.headline)
             
-            Text(product.nutritionalInfo)
+            Text(product.nutritionalInfo ?? "")
                 .font(.body)
             
             Spacer()

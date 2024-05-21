@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var products: [Product] = []
     @State private var cart: [Product] = []
-    @State private var selectedProduct: Product?
+    @State private var productDetails: Product?
 
     var body: some View {
         TabView {
@@ -24,10 +24,10 @@ struct ContentView: View {
                                     ProductCardView(product: product)
                                         .frame(width: UIScreen.main.bounds.width - 40) // Товар на всю ширину
                                         .onTapGesture {
-                                            selectedProduct = product
+                                            fetchProductDetails(for: product.id)
                                         }
-                                        .sheet(item: $selectedProduct) { product in
-                                            ProductDetailView(product: product)
+                                        .sheet(item: $productDetails) { productDetails in
+                                            ProductDetailView(product: productDetails)
                                         }
                                 }
                             }
@@ -47,10 +47,10 @@ struct ContentView: View {
                             ForEach(products) { product in
                                 ProductCardView(product: product)
                                     .onTapGesture {
-                                        selectedProduct = product
+                                        fetchProductDetails(for: product.id)
                                     }
-                                    .sheet(item: $selectedProduct) { product in
-                                        ProductDetailView(product: product)
+                                    .sheet(item: $productDetails) { productDetails in
+                                        ProductDetailView(product: productDetails)
                                     }
                             }
                         }
@@ -79,7 +79,7 @@ struct ContentView: View {
     }
 
     func fetchProducts() {
-        guard let url = URL(string: "https://mocki.io/v1/77ff6a97-f7b2-4370-af3c-a3dba5cf9bae") else {
+        guard let url = URL(string: "https://api.mocki.io/v2/m89gu1r6/productList") else {
             print("Invalid URL")
             return
         }
@@ -91,6 +91,29 @@ struct ContentView: View {
                     
                     DispatchQueue.main.async {
                         self.products = decodedResponse.products
+                    }
+                } catch {
+                    print("Error decoding data: \(error)")
+                }
+            } else if let error = error {
+                print("Error fetching data: \(error)")
+            }
+        }.resume()
+    }
+
+    func fetchProductDetails(for productId: Int) {
+        guard let url = URL(string: "https://api.mocki.io/v2/m89gu1r6/products/\(productId)") else {
+            print("Invalid URL")
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(Product.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        self.productDetails = decodedResponse
                     }
                 } catch {
                     print("Error decoding data: \(error)")
